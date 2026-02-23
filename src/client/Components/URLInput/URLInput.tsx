@@ -1,26 +1,80 @@
-// import './main.css'
 import './urlinput.css'
-
-import {Button, Center, Group, Input, Stack, TextInput, Title} from '@mantine/core';
+import React, { useState } from "react";
+import {Button, Group, Stack, Text, TextInput} from '@mantine/core';
 
 function URLInput() {
+
+    // stores current content of the textbox
+    const [url, setUrl] = useState("");
+    const [shortURL, setShortURL] = useState("");
+    const PREFIX = "http://localhost:3000/";
+
+    // on content change, update the state
+    const handleURLChange = (e) => {
+        setUrl(e.target.value);
+        console.log(e.target.value); // DEBUG: show current state content
+    };
+
+    // on submit, send request to backend --> get shortcode
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+
+        console.log("submit button clicked!");
+        console.log(url);
+        console.log(validateURL(url));
+        if (validateURL(url)){
+            try {
+                const response = await fetch("http://localhost:3000/shorten", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url: url })
+                });
+                const data = await response.json();
+                // console.log(data.shortCode);
+                setShortURL(PREFIX + data.shortCode);
+
+            }
+            catch (err) {
+                console.error("Error:",err);
+            }
+        }
+    }
+
+    // URL format validation
+    const validateURL = (url) => {
+        const regex = /^https?:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+
+        // console.log(regex.test(url);
+        return regex.test(url);
+    }
+
     return (
-        <Group gap={0} grow={false}>
-            <TextInput
-                size="xl"
-                radius="lg"
-                placeholder="enter your URL..."
-                style={{ flex: 4 }}
-            />
-            <Button
-                size="xl"
-                radius="lg"
-                style={{ flex: 1 }}
-                variant={"light"}
-            >
-                Submit
-            </Button>
-        </Group>
+        <Stack>
+            <Group gap={0} grow={false}>
+                <TextInput
+                    size="xl"
+                    radius="lg"
+                    placeholder="enter your URL..."
+                    style={{ flex: 4 }}
+                    onChange={handleURLChange}
+                />
+                <Button
+                    size="xl"
+                    radius="lg"
+                    style={{ flex: 1 }}
+                    variant={"light"}
+                    onClick={handleSubmit}
+                >
+                    Submit
+                </Button>
+            </Group>
+            <Text>
+                <a href={shortURL} target="_blank" rel="noopener noreferrer">
+                    {shortURL}
+                </a>
+            </Text>
+        </Stack>
+
     );
 }
 export default URLInput;

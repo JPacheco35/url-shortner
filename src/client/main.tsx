@@ -6,7 +6,7 @@ import '@mantine/core/styles.css';
 
 // import App from './App.tsx'
 import Header from "./Components/Header/Header.tsx";
-import {Box, Container, createTheme, Flex, MantineProvider} from "@mantine/core";
+import {createTheme, MantineProvider} from "@mantine/core";
 import URLInput from "./Components/URLInput/URLInput.tsx";
 
 const theme = createTheme({
@@ -68,7 +68,6 @@ createRoot(document.getElementById('root')!).render(
                 </div>
 
             </div>
-
         </StrictMode>
     </MantineProvider>
 )

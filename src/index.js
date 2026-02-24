@@ -3,14 +3,12 @@ import cors from "cors";
 import shortenRoute from "./routes/shorten.js";
 import redirectRoute from "./routes/redirect.js";
 import { connectDB } from "./db.js";
+import dotenv from "dotenv";
 
 const app = express();
 const PORT = 3000;
 
-// in-memory database
-// const urlDatabase = {}; //code -> longURL
-// const longURLToCode = {}; // longURL -> code
-
+dotenv.config();
 await connectDB(); // connect before routes are used
 
 app.use(cors());

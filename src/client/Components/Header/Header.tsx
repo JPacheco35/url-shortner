@@ -14,7 +14,7 @@ function Header() {
                         fontFamily: 'Ubuntu, serif',
                     }}
                 >
-                    Trunc8
+                    Truncc8
                 </Title>
 
                 <Title

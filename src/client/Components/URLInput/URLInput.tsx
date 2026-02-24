@@ -7,7 +7,7 @@ function URLInput() {
     // stores current content of the textbox
     const [url, setUrl] = useState("");
     const [shortURL, setShortURL] = useState("");
-    const PORT = "3000";
+    // const PORT = "3000";
 
     // on content change, update the state
     const handleURLChange = (e: { target: { value: SetStateAction<string>; }; }) => {

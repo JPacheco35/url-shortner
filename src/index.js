@@ -18,5 +18,3 @@ app.use("/shorten", shortenRoute()); // POST /shorten
 app.use("/", redirectRoute()); // GET /:code
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-module.exports = app;

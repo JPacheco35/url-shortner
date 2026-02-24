@@ -13,33 +13,28 @@ export default () => {
 
         if (!longURL) return res.status(400).json({ error: "URL is required" });
 
-        try {
-            // Check if the long URL already exists in the database
-            const existingUrl = await Url.findOne({ longURL });
+        // Duplicate check
+        const existing = await Url.findOne({ longURL });
+        if (existing) {
+            return res.json({ shortCode: existing.shortCode });
+        }
 
-            if (existingUrl) {
-                return res.json({ shortCode: existingUrl.shortCode });
-            }
-
-            // Each URL entered gets a unique 6-char shortcode
+            // each URL entered gets unique 6 char shortcode
             let shortCode = "";
 
-            // Generate 6 random alphanumeric characters
+            // generate 6 random alphanumeric characters
             for (let i = 0; i < 6; i++) {
                 const randChar = Math.floor(Math.random() * chars.length);
                 shortCode = chars[randChar] + shortCode;
+                // console.log("short: " + shortCode)
             }
 
-            // Save to DB
-            const newUrl = new Url({ shortCode, longURL });
-            await newUrl.save();
+        // Save to DB
+        const newUrl = new Url({ shortCode, longURL });
+        await newUrl.save();
 
-            // Return data
-            res.json({ shortCode });
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ error: "Server error" });
-        }
+        // return data
+        res.json({ shortCode: shortCode });
     });
 
     return router;

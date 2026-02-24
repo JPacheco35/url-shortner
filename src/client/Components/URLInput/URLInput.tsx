@@ -1,5 +1,5 @@
-import './urlinput.css'
-import React, { useState } from "react";
+import './URLInput.css'
+import { useState, type SetStateAction} from "react";
 import {Button, Group, Stack, Text, TextInput} from '@mantine/core';
 
 function URLInput() {
@@ -7,16 +7,16 @@ function URLInput() {
     // stores current content of the textbox
     const [url, setUrl] = useState("");
     const [shortURL, setShortURL] = useState("");
-    const PREFIX = "http://localhost:3000/";
+    const PORT = "3000";
 
     // on content change, update the state
-    const handleURLChange = (e) => {
+    const handleURLChange = (e: { target: { value: SetStateAction<string>; }; }) => {
         setUrl(e.target.value);
         console.log(e.target.value); // DEBUG: show current state content
     };
 
     // on submit, send request to backend --> get shortcode
-    const handleSubmit = async(e) => {
+    const handleSubmit = async(e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
         console.log("submit button clicked!");
@@ -31,7 +31,7 @@ function URLInput() {
                 });
                 const data = await response.json();
                 // console.log(data.shortCode);
-                setShortURL(PREFIX + data.shortCode);
+                setShortURL(window.location.protocol + '//' + location.hostname + ':' + PORT + '/' + data.shortCode);
 
             }
             catch (err) {
@@ -41,7 +41,7 @@ function URLInput() {
     }
 
     // URL format validation
-    const validateURL = (url) => {
+    const validateURL = (url: string) => {
         const regex = /^https?:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
 
         // console.log(regex.test(url);
@@ -50,12 +50,12 @@ function URLInput() {
 
     return (
         <Stack>
-            <Group gap={0} grow={false}>
+            <Group gap={5} grow={false}>
                 <TextInput
                     size="xl"
                     radius="lg"
                     placeholder="enter your URL..."
-                    style={{ flex: 4 }}
+                    style={{ flex: 5 }}
                     onChange={handleURLChange}
                 />
                 <Button

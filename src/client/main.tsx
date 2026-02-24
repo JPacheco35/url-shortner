@@ -8,6 +8,7 @@ import '@mantine/core/styles.css';
 import Header from "./Components/Header/Header.tsx";
 import {createTheme, MantineProvider} from "@mantine/core";
 import URLInput from "./Components/URLInput/URLInput.tsx";
+import Footer from "./Components/Footer/Footer.tsx";
 
 const theme = createTheme({
 
@@ -65,6 +66,10 @@ createRoot(document.getElementById('root')!).render(
 
                 <div className="item item-2">
                     <URLInput/>
+                </div>
+
+                <div className="item item-3">
+                    <Footer/>
                 </div>
 
             </div>

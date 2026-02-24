@@ -6,8 +6,28 @@ function Header() {
     return (
         <Center>
             <Stack gap="xs">
-                <Title order={1} size={100}>Trunc8</Title>
-                <Title order={3} size={20}>a URL Shortener</Title>
+                <Title
+                    className={"gradient-animate"}
+                    order={1}
+                    size={100}
+                    style={{
+                        fontFamily: 'Ubuntu, serif',
+                    }}
+                >
+                    Trunc8
+                </Title>
+
+                <Title
+                    order={3}
+                    size={20}
+                    style={{
+                        fontFamily: 'Ubuntu, serif',
+                        fontStyle: 'italic'
+                    }}
+
+                >
+                    a URL Shortener
+                </Title>
             </Stack>
         </Center>
     )

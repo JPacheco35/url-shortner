@@ -17,5 +17,4 @@ app.use(express.json());
 app.use("/shorten", shortenRoute()); // POST /shorten
 app.use("/", redirectRoute()); // GET /:code
 
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-export default app;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
